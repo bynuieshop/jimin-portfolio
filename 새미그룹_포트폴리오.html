@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>살리는 샘 — 박지민 × 새미그룹</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:     #0D0D0D;
+      --green:  #4A7C59;
+      --light:  #A8C5A0;
+      --gold:   #C4A35A;
+      --text:   #F5F0E8;
+      --sub:    #787878;
+      --border: rgba(245,240,232,0.07);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Serif KR', serif;
+      font-weight: 300;
+      line-height: 1.75;
+      overflow-x: hidden;
+    }
+
+    /* ── BACK BTN ── */
+    .back-btn {
+      position: fixed;
+      top: 32px;
+      left: 40px;
+      z-index: 100;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 12px;
+      letter-spacing: .18em;
+      color: var(--sub);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: color .25s;
+    }
+    .back-btn:hover { color: var(--text); }
+
+    /* ── SECTIONS ── */
+    section {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 120px 48px;
+      position: relative;
+    }
+
+    .inner {
+      max-width: 760px;
+      width: 100%;
+    }
+
+    .label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 11px;
+      letter-spacing: .28em;
+      color: var(--sub);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    /* ── REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .85s ease, transform .85s ease;
+    }
+    .reveal.show { opacity: 1; transform: translateY(0); }
+    .d1 { transition-delay: .12s; }
+    .d2 { transition-delay: .24s; }
+    .d3 { transition-delay: .36s; }
+    .d4 { transition-delay: .5s; }
+    .d5 { transition-delay: .64s; }
+
+
+    /* ════════════════════════════
+       §1 OPENING
+    ════════════════════════════ */
+    #s1 {
+      text-align: center;
+      gap: 56px;
+      background: var(--bg);
+    }
+
+    #seed-wrap {
+      opacity: 0;
+      animation: popIn 1s cubic-bezier(.2,.8,.3,1) forwards .4s;
+    }
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(.55); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    #opening-copy {
+      opacity: 0;
+      animation: fadeUp .9s ease forwards 2.2s;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .op-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: clamp(28px, 5.5vw, 58px);
+      font-weight: 400;
+      color: var(--light);
+      letter-spacing: .04em;
+      line-height: 1.3;
+      margin-bottom: 20px;
+    }
+
+    .op-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(16px, 2.5vw, 24px);
+      color: var(--sub);
+      letter-spacing: .05em;
+    }
+
+    .scroll-cue {
+      position: absolute;
+      bottom: 48px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      opacity: 0;
+      animation: fadeUp .6s ease forwards 3.4s;
+    }
+    .scroll-cue span {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 10px;
+      letter-spacing: .22em;
+      color: var(--sub);
+    }
+    .scroll-line {
+      width: 1px;
+      height: 44px;
+      background: linear-gradient(to bottom, rgba(120,120,120,.6), transparent);
+      animation: linePulse 2.2s ease infinite 4s;
+    }
+    @keyframes linePulse {
+      0%,100% { opacity: .35; }
+      50%      { opacity: 1; }
+    }
+
+
+    /* ════════════════════════════
+       §2 THE SEED
+    ════════════════════════════ */
+    #s2 { background: var(--bg); }
+
+    #s2 .inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+    }
+
+    .seed-h { font-size: clamp(22px, 3.8vw, 38px); font-weight: 300; line-height: 1.3; margin-bottom: 28px; }
+    .seed-p { font-size: 14px; color: var(--sub); line-height: 2; }
+
+    .seed-quote {
+      margin-top: 32px;
+      padding-left: 18px;
+      border-left: 1px solid var(--green);
+      font-size: 14px;
+      color: var(--light);
+      line-height: 2;
+    }
+
+    /* Fragment bubbles */
+    .frag-stage {
+      position: relative;
+      height: 380px;
+    }
+
+    .frag {
+      position: absolute;
+      padding: 9px 18px;
+      border: 1px solid rgba(74,124,89,.35);
+      border-radius: 40px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13px;
+      letter-spacing: .08em;
+      color: var(--light);
+      background: rgba(74,124,89,.05);
+      white-space: nowrap;
+      transition: top 1.1s cubic-bezier(.4,0,.2,1),
+                  left 1.1s cubic-bezier(.4,0,.2,1),
+                  opacity 1s ease,
+                  transform 1.1s cubic-bezier(.4,0,.2,1);
+    }
+
+    /* float animations */
+    .frag:nth-child(1) { top: 8%;  left: 5%;  animation: f1 7s ease-in-out infinite; }
+    .frag:nth-child(2) { top: 18%; right: 0%; animation: f2 8s ease-in-out infinite .5s; }
+    .frag:nth-child(3) { top: 44%; left: 0%;  animation: f3 6s ease-in-out infinite 1s; }
+    .frag:nth-child(4) { top: 62%; right: 5%; animation: f1 9s ease-in-out infinite 1.5s; }
+    .frag:nth-child(5) { bottom: 5%; left: 18%; animation: f2 7s ease-in-out infinite 2s; }
+
+    @keyframes f1 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(8px,-14px)} }
+    @keyframes f2 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-10px,9px)} }
+    @keyframes f3 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(7px,11px)} }
+
+    .frag-seed {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%) scale(0);
+      opacity: 0;
+    }
+
+
+    /* ════════════════════════════
+       §3 THE ROOT
+    ════════════════════════════ */
+    #s3 { background: linear-gradient(to bottom, var(--bg) 0%, #091510 100%); }
+
+    #s3 .inner {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 72px;
+      align-items: start;
+    }
+
+    .tree-col {
+      display: flex;
+      justify-content: center;
+      padding-top: 8px;
+    }
+
+    .axis-list { list-style: none; display: flex; flex-direction: column; gap: 36px; margin-top: 8px; }
+
+    .axis-item {
+      padding-left: 22px;
+      border-left: 1px solid var(--border);
+      transition: border-color .3s;
+    }
+    .axis-item:hover { border-left-color: var(--green); }
+
+    .axis-en {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 10px;
+      letter-spacing: .22em;
+      color: var(--green);
+      margin-bottom: 6px;
+    }
+    .axis-ko { font-size: 17px; font-weight: 400; margin-bottom: 7px; }
+    .axis-desc { font-size: 13px; color: var(--sub); line-height: 1.9; }
+
+    .phil-box {
+      margin-top: 48px;
+      padding: 24px 28px;
+      border: 1px solid rgba(74,124,89,.18);
+      background: rgba(74,124,89,.03);
+    }
+    .phil-cn {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 30px;
+      letter-spacing: .35em;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .phil-ko { font-size: 12px; color: var(--sub); letter-spacing: .1em; }
+
+
+    /* ════════════════════════════
+       §4 THE TRUNK
+    ════════════════════════════ */
+    #s4 { background: #091510; }
+
+    .s4-h { font-size: clamp(22px, 3.5vw, 36px); font-weight: 300; line-height: 1.3; margin-bottom: 48px; }
+
+    .sys-list { display: flex; flex-direction: column; }
+
+    .sys-item {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: flex-start;
+      gap: 24px;
+      opacity: 0;
+      transform: translateX(-16px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .sys-item.show { opacity: 1; transform: translateX(0); }
+
+    .sys-n {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 11px;
+      letter-spacing: .2em;
+      color: var(--green);
+      flex-shrink: 0;
+      padding-top: 3px;
+    }
+    .sys-t { font-size: 15px; line-height: 1.65; }
+
+    .trunk-q {
+      margin-top: 60px;
+      text-align: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(18px, 3vw, 28px);
+      color: var(--light);
+      line-height: 1.7;
+    }
+
+
+    /* ════════════════════════════
+       §5 THE BRANCHES
+    ════════════════════════════ */
+    #s5 { background: linear-gradient(to bottom, #091510 0%, var(--bg) 100%); }
+
+    .phase-list {
+      margin-top: 44px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .phase-list::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 8px; bottom: 8px;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--green), rgba(74,124,89,0));
+    }
+
+    .phase-item {
+      padding: 26px 0 26px 36px;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+    .phase-item:last-child { border-bottom: none; }
+
+    .phase-item::before {
+      content: '';
+      position: absolute;
+      left: -4px;
+      top: 34px;
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 1.5px solid var(--green);
+      transition: background .25s;
+    }
+    .phase-item:hover::before { background: var(--green); }
+
+    .phase-lbl {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 11px;
+      letter-spacing: .22em;
+      color: var(--green);
+      margin-bottom: 7px;
+    }
+    .phase-tit { font-size: 16px; font-weight: 400; margin-bottom: 9px; }
+    .phase-desc { font-size: 13px; color: var(--sub); line-height: 1.9; }
+
+
+    /* ════════════════════════════
+       §6 THE FRUIT
+    ════════════════════════════ */
+    #s6 { background: var(--bg); text-align: center; }
+
+    .phil-lines {
+      max-width: 580px;
+      margin: 64px auto 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .phil-l {
+      font-size: clamp(15px, 2.4vw, 20px);
+      font-weight: 300;
+      line-height: 1.8;
+    }
+    .phil-l:first-child { color: var(--light); }
+
+    .cta-box {
+      margin: 72px auto 0;
+      max-width: 520px;
+      padding: 52px 48px;
+      border: 1px solid rgba(74,124,89,.25);
+    }
+    .cta-main {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(24px, 4.5vw, 42px);
+      color: var(--gold);
+      letter-spacing: .04em;
+      margin-bottom: 18px;
+      line-height: 1.3;
+    }
+    .cta-sub {
+      font-size: 14px;
+      color: var(--sub);
+      line-height: 2;
+    }
+
+
+    /* ── SVG TREE ── */
+    .draw-path {
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+
+    /* ── RESPONSIVE ── */
+    @media(max-width: 768px) {
+      section { padding: 80px 24px; }
+      #s2 .inner { grid-template-columns: 1fr; gap: 48px; }
+      #s3 .inner { grid-template-columns: 1fr; gap: 48px; }
+      .tree-col { justify-content: flex-start; }
+      .frag-stage { height: 280px; }
+      .back-btn { top: 20px; left: 24px; }
+    }
+    @media(max-width: 480px) {
+      section { padding: 64px 20px; }
+      .cta-box { padding: 36px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<a href="박지민_포트폴리오_v2.html" class="back-btn">← BACK</a>
+
+
+<!-- ══════════════════════════════════════
+     §1  OPENING
+══════════════════════════════════════ -->
+<section id="s1">
+
+  <div id="seed-wrap">
+    <svg id="seed-svg" width="88" height="116" viewBox="0 0 88 116" fill="none">
+      <!-- outer silhouette -->
+      <path id="sp1"
+        d="M44 4 C68 4 80 24 80 52 C80 82 64 108 44 112 C24 108 8 82 8 52 C8 24 20 4 44 4 Z"
+        class="draw-path" stroke="#4A7C59" stroke-width="1.5"/>
+      <!-- center vein -->
+      <line id="sp2" x1="44" y1="9" x2="44" y2="108"
+        class="draw-path" stroke="#A8C5A0" stroke-width=".9" opacity=".55"/>
+      <!-- inner leaf shape -->
+      <path id="sp3"
+        d="M44 32 C56 48 56 68 44 80 C32 68 32 48 44 32 Z"
+        class="draw-path" stroke="#A8C5A0" stroke-width=".8"
+        fill="rgba(74,124,89,.12)"/>
+    </svg>
+  </div>
+
+  <div id="opening-copy">
+    <div class="op-title">살리는 샘, 새미</div>
+    <div class="op-sub">생명의 샘, 새로운 미래 — 이 이름 안에 하나의 세계가 있다.</div>
+  </div>
+
+  <div class="scroll-cue">
+    <span>SCROLL</span>
+    <div class="scroll-line"></div>
+  </div>
+
+</section>
+
+
+<!-- ══════════════════════════════════════
+     §2  THE SEED
+══════════════════════════════════════ -->
+<section id="s2">
+  <div class="inner">
+
+    <div>
+      <div class="label reveal">01 — 씨앗</div>
+      <h2 class="seed-h reveal d1">파편들 사이에서<br>뿌리를 찾다</h2>
+      <p class="seed-p reveal d2">
+        '새미'는 생명의 샘이자, 모두가 함께 잘사는 '새로운 미래'입니다.<br>
+        새미그룹의 계열사들은 각자의 언어로, 각자의 시장에서 존재합니다.
+        PO필름, 작물 영양·보호제, 기계·FA, 친환경 농자재, 유통.
+        얼핏 파편처럼 보이는 이것들은 사실 하나의 뿌리에서 나왔습니다.
+      </p>
+      <div class="seed-quote reveal d3">
+        이 파편들은 사실 하나의 뿌리에서 나왔습니다.<br>그 뿌리의 이름이 '살리는 샘'입니다.
+      </div>
+    </div>
+
+    <div class="frag-stage" id="frag-stage">
+      <div class="frag">(주)새미 — PO필름</div>
+      <div class="frag">(주)ARTS — 작물 영양·보호제</div>
+      <div class="frag">(주)JIS — 기계·FA</div>
+      <div class="frag">(주)더한농 — 친환경 농자재</div>
+      <div class="frag">고고마트 — 유통</div>
+
+      <div class="frag-seed" id="frag-seed">
+        <svg width="54" height="70" viewBox="0 0 88 116" fill="none">
+          <path d="M44 4 C68 4 80 24 80 52 C80 82 64 108 44 112 C24 108 8 82 8 52 C8 24 20 4 44 4 Z"
+            stroke="#4A7C59" stroke-width="2" fill="rgba(74,124,89,.18)"/>
+          <line x1="44" y1="9" x2="44" y2="108" stroke="#A8C5A0" stroke-width="1" opacity=".5"/>
+        </svg>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     §3  THE ROOT
+══════════════════════════════════════ -->
+<section id="s3">
+  <div class="inner">
+
+    <div class="tree-col">
+      <!-- Root-stage tree: trunk lower + roots -->
+      <svg id="root-svg" width="160" height="300" viewBox="0 0 160 300" fill="none">
+        <line id="r0" x1="80" y1="300" x2="80" y2="120"
+          class="draw-path" stroke="#4A7C59" stroke-width="2.2"/>
+        <path id="r1"
+          d="M80 270 C55 280 25 290 5 305"
+          class="draw-path" stroke="#4A7C59" stroke-width="1.6" opacity=".7"/>
+        <path id="r2"
+          d="M80 270 C105 280 135 290 155 305"
+          class="draw-path" stroke="#4A7C59" stroke-width="1.6" opacity=".7"/>
+        <path id="r3"
+          d="M80 290 C70 300 65 310 62 320"
+          class="draw-path" stroke="#A8C5A0" stroke-width="1" opacity=".5"/>
+        <path id="r4"
+          d="M80 290 C90 300 95 310 98 320"
+          class="draw-path" stroke="#A8C5A0" stroke-width="1" opacity=".5"/>
+        <!-- small branch buds at top of trunk -->
+        <path id="r5"
+          d="M80 160 C65 148 48 144 32 142"
+          class="draw-path" stroke="#4A7C59" stroke-width="1.2" opacity=".5"/>
+        <path id="r6"
+          d="M80 160 C95 148 112 144 128 142"
+          class="draw-path" stroke="#4A7C59" stroke-width="1.2" opacity=".5"/>
+      </svg>
+    </div>
+
+    <div>
+      <div class="label reveal">02 — 뿌리</div>
+      <h2 class="reveal d1" style="font-size:clamp(22px,3.5vw,36px);font-weight:300;line-height:1.3;margin-bottom:36px;">
+        살리는 샘의<br>세 가지 언어
+      </h2>
+
+      <ul class="axis-list">
+        <li class="axis-item reveal d1">
+          <div class="axis-en">① EARTH</div>
+          <div class="axis-ko">땅을 살린다</div>
+          <div class="axis-desc">친환경 농자재, PO필름으로 농업 환경을 보호하고 지속 가능한 땅을 만듭니다.</div>
+        </li>
+        <li class="axis-item reveal d2">
+          <div class="axis-en">② PEOPLE</div>
+          <div class="axis-ko">사람을 살린다</div>
+          <div class="axis-desc">농민, 대리점, 소비자 — 연결된 모든 사람의 삶을 더 나은 방향으로 이끕니다.</div>
+        </li>
+        <li class="axis-item reveal d3">
+          <div class="axis-en">③ FUTURE</div>
+          <div class="axis-ko">미래를 살린다</div>
+          <div class="axis-desc">R&amp;D, 스마트팜, 로봇 기술로 농업의 다음 장을 함께 써나갑니다.</div>
+        </li>
+      </ul>
+
+      <div class="phil-box reveal d4">
+        <div class="phil-cn">경천애인</div>
+        <div class="phil-ko">敬天愛人 — 사람과 자연이 함께 살아가는 지속가능한 농업의 철학</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     §4  THE TRUNK
+══════════════════════════════════════ -->
+<section id="s4">
+  <div class="inner">
+
+    <div class="label reveal">03 — 줄기</div>
+    <h2 class="s4-h reveal d1">브랜드 언어 시스템을<br>설계한다</h2>
+
+    <div class="sys-list" id="sys-list">
+      <div class="sys-item">
+        <span class="sys-n">01</span>
+        <span class="sys-t">브랜드 슬로건 재정의 — '살리는 샘'의 언어를 구체화</span>
+      </div>
+      <div class="sys-item">
+        <span class="sys-n">02</span>
+        <span class="sys-t">핵심 가치 언어화 — 3개 키워드로 그룹 철학을 집약</span>
+      </div>
+      <div class="sys-item">
+        <span class="sys-n">03</span>
+        <span class="sys-t">톤 앤 매너 가이드 — 새미그룹이 말하는 방식을 정의</span>
+      </div>
+      <div class="sys-item">
+        <span class="sys-n">04</span>
+        <span class="sys-t">계열사 통합 네이밍 체계 — 파편을 하나의 뿌리로</span>
+      </div>
+      <div class="sys-item">
+        <span class="sys-n">05</span>
+        <span class="sys-t">B2B 브랜드 언어 — 대리점·농가를 위한 언어</span>
+      </div>
+      <div class="sys-item">
+        <span class="sys-n">06</span>
+        <span class="sys-t">B2C 브랜드 언어 — 소비자를 위한 언어</span>
+      </div>
+    </div>
+
+    <div class="trunk-q reveal d4">
+      브랜드는 로고가 아닙니다.<br>
+      브랜드는 '우리가 왜 존재하는가'에 답하는 언어입니다.
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     §5  THE BRANCHES
+══════════════════════════════════════ -->
+<section id="s5">
+  <div class="inner">
+
+    <div class="label reveal">04 — 가지</div>
+    <h2 class="reveal d1" style="font-size:clamp(22px,3.5vw,36px);font-weight:300;line-height:1.3;">
+      나무가 자라는 순서
+    </h2>
+
+    <div class="phase-list reveal d2">
+      <div class="phase-item">
+        <div class="phase-lbl">PHASE 1 — 씨앗</div>
+        <div class="phase-tit">Brand Foundation</div>
+        <div class="phase-desc">
+          브랜드 세계관 문서화 / 핵심 언어 시스템 구축<br>
+          내부 구성원이 '우리가 어떤 회사인지' 스스로 설명할 수 있도록
+        </div>
+      </div>
+      <div class="phase-item">
+        <div class="phase-lbl">PHASE 2 — 뿌리</div>
+        <div class="phase-tit">Brand Identity</div>
+        <div class="phase-desc">
+          비주얼 아이덴티티 정비 / 웹사이트 리뉴얼<br>
+          계열사 통합 디자인 시스템
+        </div>
+      </div>
+      <div class="phase-item">
+        <div class="phase-lbl">PHASE 3 — 줄기</div>
+        <div class="phase-tit">Brand Communication</div>
+        <div class="phase-desc">
+          SNS 콘텐츠 세계관 확립 / 새미농박사 콘텐츠 브랜딩<br>
+          우수농가 스토리텔링 체계화
+        </div>
+      </div>
+      <div class="phase-item">
+        <div class="phase-lbl">PHASE 4 — 가지</div>
+        <div class="phase-tit">Brand Experience</div>
+        <div class="phase-desc">
+          농가 → 소비자 직결 브랜드 경험 설계<br>
+          고고마트 브랜드 포지셔닝 / B2C 접점 확대
+        </div>
+      </div>
+      <div class="phase-item">
+        <div class="phase-lbl">PHASE 5 — 열매</div>
+        <div class="phase-tit">Brand Expansion</div>
+        <div class="phase-desc">
+          새미그룹이 "농업의 브랜드"가 되는 순간<br>
+          대외 PR / 어워드 / 파트너십
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     §6  THE FRUIT
+══════════════════════════════════════ -->
+<section id="s6">
+  <div class="inner" style="display:flex;flex-direction:column;align-items:center;">
+
+    <div class="label reveal">05 — 열매</div>
+
+    <!-- Full tree -->
+    <div class="reveal d1" style="margin-top:40px;">
+      <svg id="full-tree" width="220" height="340" viewBox="0 0 220 340" fill="none">
+        <!-- roots -->
+        <path d="M110 300 C80 312 44 320 12 332" class="draw-path" stroke="#4A7C59" stroke-width="1.6" opacity=".55"/>
+        <path d="M110 300 C140 312 176 320 208 332" class="draw-path" stroke="#4A7C59" stroke-width="1.6" opacity=".55"/>
+        <path d="M110 310 C100 322 96 332 93 342" class="draw-path" stroke="#A8C5A0" stroke-width="1" opacity=".4"/>
+        <path d="M110 310 C120 322 124 332 127 342" class="draw-path" stroke="#A8C5A0" stroke-width="1" opacity=".4"/>
+        <!-- trunk -->
+        <line x1="110" y1="300" x2="110" y2="50" class="draw-path" stroke="#4A7C59" stroke-width="2.8"/>
+        <!-- branches level 1 (low) -->
+        <path d="M110 240 C85 225 52 218 22 215" class="draw-path" stroke="#4A7C59" stroke-width="2" opacity=".85"/>
+        <path d="M110 240 C135 225 168 218 198 215" class="draw-path" stroke="#4A7C59" stroke-width="2" opacity=".85"/>
+        <!-- branches level 2 -->
+        <path d="M110 190 C86 175 58 168 34 165" class="draw-path" stroke="#4A7C59" stroke-width="1.7" opacity=".75"/>
+        <path d="M110 190 C134 175 162 168 186 165" class="draw-path" stroke="#4A7C59" stroke-width="1.7" opacity=".75"/>
+        <!-- branches level 3 -->
+        <path d="M110 140 C89 125 65 118 44 115" class="draw-path" stroke="#4A7C59" stroke-width="1.4" opacity=".65"/>
+        <path d="M110 140 C131 125 155 118 176 115" class="draw-path" stroke="#4A7C59" stroke-width="1.4" opacity=".65"/>
+        <!-- branches level 4 (top) -->
+        <path d="M110 95 C94 80 74 73 56 70" class="draw-path" stroke="#A8C5A0" stroke-width="1.1" opacity=".55"/>
+        <path d="M110 95 C126 80 146 73 164 70" class="draw-path" stroke="#A8C5A0" stroke-width="1.1" opacity=".55"/>
+        <!-- crown -->
+        <circle cx="110" cy="42" r="5" fill="#A8C5A0" opacity=".5"/>
+        <!-- fruits (golden dots) -->
+        <circle cx="22"  cy="213" r="3.5" fill="#C4A35A" opacity=".8"/>
+        <circle cx="198" cy="213" r="3.5" fill="#C4A35A" opacity=".8"/>
+        <circle cx="34"  cy="163" r="3"   fill="#C4A35A" opacity=".72"/>
+        <circle cx="186" cy="163" r="3"   fill="#C4A35A" opacity=".72"/>
+        <circle cx="44"  cy="113" r="2.5" fill="#C4A35A" opacity=".62"/>
+        <circle cx="176" cy="113" r="2.5" fill="#C4A35A" opacity=".62"/>
+        <circle cx="56"  cy="68"  r="2"   fill="#A8C5A0" opacity=".55"/>
+        <circle cx="164" cy="68"  r="2"   fill="#A8C5A0" opacity=".55"/>
+      </svg>
+    </div>
+
+    <div class="phil-lines">
+      <div class="phil-l reveal d2">브랜드는 발견하는 것이다 — 만드는 것이 아니라.</div>
+      <div class="phil-l reveal d3">파편 안에 이미 세계관이 있다.</div>
+      <div class="phil-l reveal d4">내 일은 그것을 꺼내 언어로 만드는 것이다.</div>
+    </div>
+
+    <div class="cta-box reveal d5">
+      <div class="cta-main">박지민 × 새미그룹</div>
+      <div class="cta-sub">
+        살리는 샘을 세상에 꺼내는 일을 함께 시작합니다.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<script>
+/* ── 1. Seed SVG draw ── */
+document.querySelectorAll('#seed-svg .draw-path').forEach((el, i) => {
+  const len = el.getTotalLength ? el.getTotalLength() : 300;
+  el.style.strokeDasharray  = len;
+  el.style.strokeDashoffset = len;
+  el.style.transition = `stroke-dashoffset 1.4s ease ${1.1 + i * 0.55}s`;
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => { el.style.strokeDashoffset = 0; });
+  });
+});
+
+/* ── 2. Reveal on scroll ── */
+const revealEls = document.querySelectorAll('.reveal');
+const revObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); });
+}, { threshold: 0.14 });
+revealEls.forEach(el => revObs.observe(el));
+
+/* ── 3. Fragment convergence loop ── */
+const stage    = document.getElementById('frag-stage');
+const frags    = Array.from(stage.querySelectorAll('.frag'));
+const fragSeed = document.getElementById('frag-seed');
+let t1, t2, t3, t4;
+
+function resetFrags() {
+  clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4);
+  fragSeed.style.transition = 'none';
+  fragSeed.style.transform  = 'translate(-50%,-50%) scale(0)';
+  fragSeed.style.opacity    = '0';
+  frags.forEach(f => { f.style.cssText = ''; });
+}
+
+function converge() {
+  frags.forEach((f, i) => {
+    f.style.animation  = 'none';
+    f.style.transition = `top    ${1.8+i*.18}s cubic-bezier(.25,0,.1,1),
+                          left   ${1.8+i*.18}s cubic-bezier(.25,0,.1,1),
+                          right  ${1.8+i*.18}s cubic-bezier(.25,0,.1,1),
+                          bottom ${1.8+i*.18}s cubic-bezier(.25,0,.1,1),
+                          transform ${1.8+i*.18}s cubic-bezier(.25,0,.1,1),
+                          opacity 2.0s ease .4s`;
+    f.style.top       = '50%';
+    f.style.left      = '50%';
+    f.style.right     = 'auto';
+    f.style.bottom    = 'auto';
+    f.style.transform = 'translate(-50%,-50%)';
+    f.style.opacity   = '0';
+  });
+
+  t1 = setTimeout(() => {
+    fragSeed.style.transition = 'transform .85s cubic-bezier(.2,.8,.3,1), opacity .85s ease';
+    fragSeed.style.transform  = 'translate(-50%,-50%) scale(1)';
+    fragSeed.style.opacity    = '1';
+  }, 2600);
+
+  t2 = setTimeout(() => {
+    fragSeed.style.transition = 'transform .7s ease, opacity .7s ease';
+    fragSeed.style.transform  = 'translate(-50%,-50%) scale(.82)';
+    fragSeed.style.opacity    = '0';
+  }, 4400);
+
+  t3 = setTimeout(() => {
+    fragSeed.style.transition = 'none';
+    fragSeed.style.transform  = 'translate(-50%,-50%) scale(0)';
+    frags.forEach(f => { f.style.cssText = ''; });
+  }, 5200);
+
+  t4 = setTimeout(converge, 7200);
+}
+
+const fragObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { t1 = setTimeout(converge, 700); }
+    else                   { resetFrags(); }
+  });
+}, { threshold: 0.35 });
+fragObs.observe(stage);
+
+/* ── 4. Root SVG draw ── */
+const rootSvg   = document.getElementById('root-svg');
+const rootPaths = Array.from(rootSvg.querySelectorAll('.draw-path'));
+rootPaths.forEach(p => {
+  const len = p.getTotalLength ? p.getTotalLength() : 200;
+  p.style.strokeDasharray  = len;
+  p.style.strokeDashoffset = len;
+});
+
+const rootObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      rootPaths.forEach((p, i) => {
+        p.style.transition = `stroke-dashoffset 1.3s ease ${i * 0.22}s`;
+        p.style.strokeDashoffset = 0;
+      });
+    }
+  });
+}, { threshold: 0.3 });
+rootObs.observe(rootSvg);
+
+/* ── 5. System list stagger ── */
+const sysItems = document.querySelectorAll('.sys-item');
+const sysObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      sysItems.forEach((item, i) => {
+        setTimeout(() => item.classList.add('show'), i * 90);
+      });
+    }
+  });
+}, { threshold: 0.2 });
+sysObs.observe(document.getElementById('sys-list'));
+
+/* ── 6. Full tree draw on enter ── */
+const fullTree  = document.getElementById('full-tree');
+const fullPaths = Array.from(fullTree.querySelectorAll('.draw-path'));
+fullPaths.forEach(p => {
+  const len = p.getTotalLength ? p.getTotalLength() : 300;
+  p.style.strokeDasharray  = len;
+  p.style.strokeDashoffset = len;
+});
+
+const fullObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      fullPaths.forEach((p, i) => {
+        p.style.transition = `stroke-dashoffset 1.2s ease ${i * 0.14}s`;
+        p.style.strokeDashoffset = 0;
+      });
+    }
+  });
+}, { threshold: 0.25 });
+fullObs.observe(fullTree);
+</script>
+
+</body>
+</html>

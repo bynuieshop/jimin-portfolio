@@ -1,0 +1,2063 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>박지민 — Brand Strategist · CMO</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #FFFFFF;
+  --bg2: #F5F5F5;
+  --bg3: #EBEBEB;
+  --black: #000000;
+  --gray1: #1A1A1A;
+  --gray2: #555555;
+  --gray3: #999999;
+  --gray4: #CCCCCC;
+  --border: #E0E0E0;
+  --accent: #C96F4A;
+  --accent2: #A85A38;
+  --sans: 'Inter', 'Noto Sans KR', sans-serif;
+  --kr: 'Noto Sans KR', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--black);
+  font-family: var(--sans);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  line-height: 1.7;
+}
+
+a { text-decoration: none; color: inherit; }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0 60px;
+  height: 64px;
+  background: rgba(255,255,255,.96);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  transition: border-color .3s;
+}
+nav.scrolled { border-bottom-color: var(--black); }
+.nav-logo {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  color: var(--black);
+}
+.nav-links {
+  display: flex; gap: 40px; list-style: none;
+}
+.nav-links a {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: .08em;
+  color: var(--gray2);
+  transition: color .2s;
+}
+.nav-links a:hover { color: var(--black); }
+
+@media(max-width: 768px) {
+  nav { padding: 0 24px; }
+  .nav-links { display: none; }
+}
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 0 60px 100px;
+  position: relative; overflow: hidden;
+  background: var(--bg);
+  border-bottom: 1px solid var(--black);
+}
+
+.hero-bg { display: none; }
+.hero-glow { display: none; }
+
+.hero-eyebrow {
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 64px;
+}
+
+.hero-content { position: relative; z-index: 2; max-width: 1100px; }
+
+.hero-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .2em;
+  color: var(--accent);
+  margin-bottom: 40px;
+  opacity: 0;
+  animation: fadeUp .6s ease forwards .2s;
+}
+.hero-name {
+  font-family: var(--kr);
+  font-size: clamp(32px, 5.5vw, 76px);
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--black);
+  letter-spacing: -.02em;
+  margin-bottom: 48px;
+  opacity: 0;
+  animation: fadeUp .8s ease forwards .4s;
+}
+.hero-name .accent {
+  color: var(--accent);
+}
+.hero-name .light {
+  font-weight: 300;
+  color: var(--gray2);
+}
+.hero-desc {
+  font-family: var(--kr);
+  font-size: clamp(15px, 1.5vw, 18px);
+  font-weight: 300;
+  color: var(--gray2);
+  line-height: 1.9;
+  max-width: 520px;
+  margin-bottom: 64px;
+  opacity: 0;
+  animation: fadeUp .6s ease forwards .6s;
+}
+.hero-metrics {
+  display: flex; gap: 0;
+  border-top: 1px solid var(--border);
+  opacity: 0;
+  animation: fadeUp .6s ease forwards .8s;
+}
+.metric-item {
+  padding: 28px 40px 0 40px;
+  border-right: 1px solid var(--border);
+}
+.metric-item:first-child { padding-left: 0; }
+.metric-item:last-child { border-right: none; padding-right: 0; }
+.metric-num {
+  font-family: var(--sans);
+  font-size: clamp(28px, 3vw, 42px);
+  font-weight: 700;
+  color: var(--black);
+  letter-spacing: -.02em;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.metric-label {
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: .06em;
+  color: var(--gray3);
+}
+
+.hero-scroll {
+  position: absolute; bottom: 48px; right: 60px;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .2em;
+  color: var(--gray4);
+  writing-mode: vertical-rl;
+  opacity: 0;
+  animation: fadeIn 1s ease forwards 1.2s;
+}
+
+@media(max-width: 768px) {
+  .hero { padding: 0 24px 72px; }
+  .hero-metrics { flex-wrap: wrap; gap: 0; }
+  .metric-item { padding: 20px 24px 0 0; margin-right: 24px; }
+  .hero-scroll { display: none; }
+}
+
+/* ── SECTION BASE ── */
+section { padding: 120px 60px; }
+.section-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .2em;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+.section-title {
+  font-family: var(--sans);
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 700;
+  letter-spacing: -.03em;
+  line-height: 1.05;
+  margin-bottom: 64px;
+  color: var(--black);
+}
+.divider {
+  width: 100%;
+  height: 1px;
+  background: var(--border);
+  margin: 0;
+}
+
+@media(max-width: 768px) {
+  section { padding: 80px 24px; }
+}
+
+/* ── ABOUT ── */
+.about { background: var(--bg); }
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+.about-text p {
+  font-family: var(--kr);
+  font-size: clamp(15px, 1.5vw, 18px);
+  font-weight: 300;
+  color: var(--gray2);
+  line-height: 2;
+  margin-bottom: 24px;
+}
+.about-text p strong {
+  color: var(--black);
+  font-weight: 600;
+}
+.about-text p:last-child { margin-bottom: 0; }
+.about-values { display: flex; flex-direction: column; gap: 0; }
+.value-item {
+  padding: 28px 0;
+  border-bottom: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 24px;
+  align-items: baseline;
+}
+.value-num {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .1em;
+  color: var(--accent);
+  line-height: 1;
+}
+.value-content { display: flex; flex-direction: column; }
+.value-title {
+  font-family: var(--sans);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--black);
+  margin-bottom: 6px;
+  letter-spacing: -.01em;
+}
+.value-desc {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--gray2);
+  line-height: 1.8;
+}
+
+@media(max-width: 900px) {
+  .about-grid { grid-template-columns: 1fr; gap: 48px; }
+}
+
+/* ── CAREER ── */
+.career { background: var(--bg); }
+.career-list { display: flex; flex-direction: column; border-top: 1px solid var(--black); }
+.career-item {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 48px;
+  padding: 48px 0;
+  border-bottom: 1px solid var(--border);
+  align-items: baseline;
+  transition: background .2s;
+}
+.career-item:hover { background: var(--bg2); margin: 0 -60px; padding-left: 60px; padding-right: 60px; }
+.career-period {
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: .04em;
+  color: var(--gray3);
+  line-height: 1;
+}
+.career-right { }
+.career-company {
+  font-family: var(--sans);
+  font-size: clamp(20px, 2.2vw, 28px);
+  font-weight: 700;
+  color: var(--black);
+  letter-spacing: -.02em;
+  margin-bottom: 6px;
+}
+.career-role {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: .1em;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+.career-works {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin-bottom: 20px;
+}
+.work-tag {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .04em;
+  color: var(--gray2);
+  border: 1px solid var(--border);
+  padding: 4px 12px;
+  border-radius: 0;
+}
+.career-highlight {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--gray2);
+  line-height: 2;
+}
+.career-highlight strong {
+  color: var(--black);
+  font-weight: 600;
+}
+
+@media(max-width: 768px) {
+  .career-item { grid-template-columns: 1fr; gap: 12px; }
+  .career-item:hover { margin: 0 -24px; padding-left: 24px; padding-right: 24px; }
+}
+
+/* ── CASE STUDIES ── */
+.cases { background: var(--bg2); }
+.case-item {
+  margin-bottom: 100px;
+}
+.case-item:last-child { margin-bottom: 0; }
+.case-header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  margin-bottom: 48px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--black);
+}
+.case-num {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .2em;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+.case-title {
+  font-family: var(--sans);
+  font-size: clamp(26px, 3.5vw, 48px);
+  font-weight: 700;
+  color: var(--black);
+  letter-spacing: -.03em;
+  line-height: 1.35;
+}
+.case-category {
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: .1em;
+  color: var(--gray3);
+  text-align: right;
+  line-height: 2;
+}
+.case-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  margin-bottom: 48px;
+  align-items: start;
+}
+.case-summary-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .2em;
+  color: var(--gray3);
+  margin-bottom: 16px;
+}
+.case-summary-text {
+  font-family: var(--kr);
+  font-size: clamp(14px, 1.4vw, 17px);
+  font-weight: 300;
+  color: var(--gray2);
+  line-height: 2;
+}
+.case-results {
+  display: flex; flex-direction: column; gap: 0;
+}
+.result-item {
+  display: grid;
+  grid-template-columns: minmax(110px, auto) 1fr;
+  align-items: start;
+  gap: 28px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border);
+}
+.result-num {
+  font-family: var(--sans);
+  font-size: clamp(22px, 2.2vw, 30px);
+  font-weight: 700;
+  color: var(--black);
+  letter-spacing: -.02em;
+  line-height: 1.1;
+}
+.result-desc {
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--gray2);
+  line-height: 1.7;
+  padding-top: 4px;
+}
+
+/* 이미지 그리드 */
+.case-images {
+  display: grid;
+  gap: 2px;
+  margin-top: 40px;
+}
+.case-images.grid-2 { grid-template-columns: 1fr 1fr; }
+.case-images.grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+.case-images.grid-1-2 { grid-template-columns: 1.4fr 1fr 1fr; }
+
+.img-placeholder {
+  aspect-ratio: 16/10;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 10px;
+  color: var(--gray3);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .1em;
+  cursor: pointer;
+  transition: background .2s, border-color .2s;
+}
+.img-placeholder:hover {
+  background: var(--border);
+  border-color: var(--gray2);
+}
+.img-placeholder .plus {
+  font-size: 24px;
+  font-weight: 300;
+  color: var(--gray4);
+}
+.img-placeholder.tall { aspect-ratio: 3/4; }
+.img-placeholder.wide { aspect-ratio: 21/9; }
+
+.case-img {
+  overflow: hidden;
+  background: var(--bg3);
+  line-height: 0;
+}
+.case-img img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform .4s ease;
+}
+.case-img:hover img { transform: scale(1.02); }
+
+/* ── SITE EMBED (iframe) ── */
+.site-embed-wrap {
+  margin-top: 40px;
+  display: grid;
+  gap: 2px;
+}
+.site-embed-wrap.cols-2 { grid-template-columns: 1fr 1fr; }
+.site-embed {
+  position: relative;
+  overflow: hidden;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+}
+.site-embed iframe {
+  width: 100%;
+  height: 560px;
+  border: none;
+  display: block;
+}
+.site-embed-wrap.cols-2 .site-embed iframe { height: 400px; }
+.site-embed-label {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 8px 14px;
+  background: rgba(255,255,255,.88);
+  backdrop-filter: blur(6px);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .06em;
+  color: var(--gray3);
+  border-top: 1px solid var(--border);
+}
+@media(max-width: 768px) {
+  .site-embed-wrap.cols-2 { grid-template-columns: 1fr; }
+  .site-embed iframe { height: 420px; }
+  .site-embed-wrap.cols-2 .site-embed iframe { height: 380px; }
+}
+
+.case-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin-top: 28px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  color: var(--black);
+  border-bottom: 1.5px solid var(--black);
+  padding-bottom: 3px;
+  transition: color .2s, border-color .2s;
+}
+.case-link:hover { color: var(--gray2); border-color: var(--gray2); }
+
+@media(max-width: 900px) {
+  .case-body { grid-template-columns: 1fr; gap: 40px; }
+  .case-header { grid-template-columns: 1fr; }
+  .case-category { text-align: left; margin-top: 8px; }
+}
+@media(max-width: 600px) {
+  .case-images.grid-2, .case-images.grid-3, .case-images.grid-1-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── SKILLS ── */
+.skills { background: var(--bg); }
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+.skill-block {
+  padding: 40px 36px;
+  background: var(--bg);
+  transition: background .2s;
+}
+.skill-block:hover { background: var(--black); }
+.skill-block:hover .skill-icon,
+.skill-block:hover .skill-title,
+.skill-block:hover .skill-list li { color: #FFFFFF; border-color: rgba(255,255,255,.2); }
+.skill-icon {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .15em;
+  color: var(--accent);
+  margin-bottom: 20px;
+  transition: color .2s;
+}
+.skill-title {
+  font-family: var(--sans);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--black);
+  letter-spacing: -.01em;
+  margin-bottom: 16px;
+  transition: color .2s;
+}
+.skill-list {
+  list-style: none;
+  display: flex; flex-wrap: wrap; gap: 6px;
+}
+.skill-list li {
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: .04em;
+  color: var(--gray2);
+  border: 1px solid var(--border);
+  padding: 3px 10px;
+  transition: color .2s, border-color .2s;
+}
+
+@media(max-width: 900px) {
+  .skills-grid { grid-template-columns: 1fr 1fr; }
+}
+@media(max-width: 480px) {
+  .skills-grid { grid-template-columns: 1fr; }
+}
+
+/* ── CONTACT ── */
+.contact {
+  background: var(--black);
+  text-align: center;
+  padding: 140px 60px;
+}
+.contact .section-label { color: rgba(255,255,255,.4); text-align: center; margin-bottom: 24px; }
+.contact-title {
+  font-family: var(--sans);
+  font-size: clamp(48px, 8vw, 100px);
+  font-weight: 700;
+  letter-spacing: -.04em;
+  color: #FFFFFF;
+  margin-bottom: 24px;
+  line-height: .95;
+}
+.contact-sub {
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: .15em;
+  color: rgba(255,255,255,.4);
+  margin-bottom: 56px;
+}
+.contact-links {
+  display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;
+}
+.contact-link {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: .12em;
+  color: rgba(255,255,255,.7);
+  border-bottom: 1px solid rgba(255,255,255,.2);
+  padding-bottom: 6px;
+  transition: color .2s, border-color .2s;
+}
+.contact-link:hover { color: var(--accent); border-color: var(--accent); }
+
+/* ── PORTFOLIO CTA ── */
+.portfolio-cta {
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  padding: 80px 60px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+}
+.portfolio-cta-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .2em;
+  color: var(--gray3);
+}
+.portfolio-search-wrap {
+  width: 100%;
+  max-width: 480px;
+}
+.portfolio-search {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  font-size: 14px;
+  font-family: inherit;
+  font-weight: 400;
+  letter-spacing: .08em;
+  padding: 12px 0;
+  outline: none;
+  transition: border-color .25s;
+}
+.portfolio-search::placeholder { color: var(--gray3); }
+.portfolio-search:focus { border-color: var(--text); }
+.portfolio-results { display: flex; flex-direction: column; margin-top: 0; }
+.portfolio-result-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+  text-decoration: none;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: .1em;
+  transition: color .2s;
+}
+.portfolio-result-item:hover { color: var(--accent); }
+.portfolio-result-arrow {
+  font-size: 12px;
+  color: var(--gray3);
+  transition: transform .2s, color .2s;
+}
+.portfolio-result-item:hover .portfolio-result-arrow {
+  transform: translateX(5px);
+  color: var(--accent);
+}
+.portfolio-no-result {
+  padding: 16px 0;
+  font-size: 12px;
+  color: var(--gray3);
+  letter-spacing: .08em;
+}
+
+.footer {
+  padding: 28px 60px;
+  background: var(--black);
+  border-top: 1px solid rgba(255,255,255,.1);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.footer-name {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  color: rgba(255,255,255,.5);
+}
+.footer-copy {
+  font-size: 11px;
+  color: rgba(255,255,255,.25);
+}
+
+@media(max-width: 768px) {
+  .contact { padding: 100px 24px; }
+  .footer { padding: 20px 24px; flex-direction: column; gap: 10px; text-align: center; }
+}
+
+/* ── NUiE 전시 그리드 ── */
+.nuie-exhibition-grid {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+.nuie-exhibition-cell {
+  padding: 36px 40px;
+  background: var(--bg);
+}
+.nuie-exhibition-label {
+  font-size: 11px; font-weight: 600; letter-spacing: .2em;
+  color: var(--gray3); margin-bottom: 16px;
+}
+.nuie-exhibition-title {
+  font-size: 20px; font-weight: 700; letter-spacing: -.02em;
+  color: var(--black); margin-bottom: 12px;
+}
+.nuie-exhibition-desc {
+  font-size: 13px; font-weight: 300; color: var(--gray2);
+  line-height: 2; margin-bottom: 16px;
+}
+.nuie-exhibition-sub {
+  font-size: 11px; color: var(--gray3);
+}
+
+.nuie-quote-block {
+  margin-top: 1px;
+  padding: 48px 40px;
+  background: var(--black);
+  text-align: center;
+}
+.nuie-quote-main {
+  font-size: clamp(18px, 2.2vw, 28px);
+  font-weight: 300;
+  color: rgba(255,255,255,.85);
+  letter-spacing: .02em;
+  margin-bottom: 16px;
+}
+.nuie-quote-stack {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .2em;
+  color: rgba(255,255,255,.35);
+}
+
+/* ── RESPONSIVE: 768px 추가 ── */
+@media(max-width: 768px) {
+  .nuie-exhibition-grid { grid-template-columns: 1fr; }
+  .nuie-exhibition-cell { padding: 28px 24px; }
+  .case-item { margin-bottom: 64px; }
+}
+
+/* ── RESPONSIVE: 480px 모바일 전면 ── */
+@media(max-width: 480px) {
+  section { padding: 60px 20px; }
+  .section-title { margin-bottom: 40px; }
+  .hero { padding: 0 20px 56px; }
+  .hero-scroll { display: none; }
+  .metric-item { padding: 16px 14px 0 0; margin-right: 14px; }
+  .metric-num { font-size: clamp(20px, 5.5vw, 32px); }
+
+  .about-grid { gap: 36px; }
+  .value-item { padding: 20px 0; }
+
+  .career-item { gap: 8px; }
+  .career-item:hover { margin: 0 -20px; padding-left: 20px; padding-right: 20px; }
+
+  .case-item { margin-bottom: 48px; }
+  .case-body { gap: 28px; }
+  .case-header { margin-bottom: 28px; padding-bottom: 20px; }
+  .result-item { grid-template-columns: 1fr; gap: 4px; }
+  .result-num { font-size: clamp(18px, 5vw, 26px); }
+  .result-desc { padding-top: 0; }
+
+  .nuie-exhibition-cell { padding: 24px 20px; }
+  .nuie-exhibition-title { font-size: 17px; }
+  .nuie-quote-block { padding: 36px 20px; }
+
+  .contact { padding: 80px 20px; }
+  .contact-links { flex-direction: column; align-items: center; gap: 20px; }
+
+  .footer { padding: 18px 20px; }
+
+}
+
+/* ── ROTATING TEXT ── */
+@keyframes rtIn  { from { transform: translateY(110%); } to { transform: translateY(0); } }
+@keyframes rtOut { from { transform: translateY(0);    } to { transform: translateY(-110%); } }
+
+.rt-accent-box {
+  background: #C96F4A;
+  color: #FFFFFF;
+  padding: 2px 24px 8px;
+  margin-left: 20px;
+  overflow: hidden;
+  vertical-align: middle;
+  display: inline-block;
+  min-width: 3em;
+  text-align: center;
+}
+.rt-text {
+  display: inline-block;
+}
+.rt-text.rt-in  { animation: rtIn  0.45s cubic-bezier(0.22,1,0.36,1) forwards; }
+.rt-text.rt-out { animation: rtOut 0.35s cubic-bezier(0.55,0,1,0.45) forwards; }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.reveal {
+  opacity: 0; transform: translateY(24px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+.reveal.show { opacity: 1; transform: translateY(0); }
+
+
+/* ── Building Animation ── */
+.about-heading {
+  display: flex;
+  align-items: flex-end;
+  gap: 48px;
+  margin-bottom: 64px;
+}
+.about-heading .section-title { margin-bottom: 0; }
+.building-wrap {
+  flex-shrink: 0;
+  padding-bottom: 6px;
+}
+.building {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 3px;
+  width: 40px;
+}
+.floor {
+  height: 8px;
+  border-radius: 1px;
+  background: var(--black);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  opacity: 0;
+}
+.floor:nth-child(n+9):nth-child(-n+10) { background: var(--gray2); }
+.floor:nth-child(n+11):nth-child(-n+12) { background: var(--accent); }
+.antenna {
+  align-self: center;
+  width: 2px;
+  height: 20px;
+  background: var(--accent);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  opacity: 0;
+}
+.building.animate .floor { animation: floorBuild 0.28s ease forwards; }
+.building.animate .floor:nth-child(1)  { animation-delay: 0.00s; }
+.building.animate .floor:nth-child(2)  { animation-delay: 0.10s; }
+.building.animate .floor:nth-child(3)  { animation-delay: 0.20s; }
+.building.animate .floor:nth-child(4)  { animation-delay: 0.30s; }
+.building.animate .floor:nth-child(5)  { animation-delay: 0.40s; }
+.building.animate .floor:nth-child(6)  { animation-delay: 0.50s; }
+.building.animate .floor:nth-child(7)  { animation-delay: 0.60s; }
+.building.animate .floor:nth-child(8)  { animation-delay: 0.70s; }
+.building.animate .floor:nth-child(9)  { animation-delay: 0.80s; }
+.building.animate .floor:nth-child(10) { animation-delay: 0.90s; }
+.building.animate .floor:nth-child(11) { animation-delay: 1.00s; }
+.building.animate .floor:nth-child(12) { animation-delay: 1.10s; }
+.building.animate .antenna             { animation: floorBuild 0.28s ease 1.25s forwards; }
+@keyframes floorBuild {
+  from { transform: scaleY(0); opacity: 0; }
+  to   { transform: scaleY(1); opacity: 1; }
+}
+@media (max-width: 900px) {
+  .about-heading { gap: 32px; }
+}
+@media (max-width: 480px) {
+  .about-heading { gap: 16px; }
+  .building { width: 28px; }
+  .floor { height: 6px; }
+}
+
+/* ── Global Experiment ── */
+.global-experiment {
+  margin-top: 56px;
+  padding-top: 48px;
+  border-top: 1px solid var(--border);
+}
+.global-experiment-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .2em;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+.global-experiment-title {
+  font-size: clamp(18px, 2vw, 26px);
+  font-weight: 700;
+  letter-spacing: -.02em;
+  color: var(--black);
+  margin-bottom: 14px;
+}
+.global-experiment-desc {
+  font-family: var(--kr);
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--gray2);
+  line-height: 2;
+  margin-bottom: 40px;
+  max-width: 540px;
+}
+.global-metrics {
+  display: flex;
+  gap: 0;
+  border-top: 1px solid var(--border);
+}
+.global-metric {
+  padding: 28px 40px 28px 0;
+  margin-right: 40px;
+  border-right: 1px solid var(--border);
+}
+.global-metric:last-child { border-right: none; margin-right: 0; }
+.global-metric-num {
+  font-family: var(--sans);
+  font-size: clamp(24px, 2.8vw, 38px);
+  font-weight: 700;
+  color: var(--black);
+  letter-spacing: -.02em;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.global-metric-label {
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: .06em;
+  color: var(--gray3);
+}
+.global-insight-block {
+  margin-top: 1px;
+  padding: 40px;
+  background: var(--black);
+  text-align: center;
+}
+.global-insight-block p {
+  font-size: clamp(15px, 1.8vw, 20px);
+  font-weight: 300;
+  color: rgba(255,255,255,.8);
+  letter-spacing: .02em;
+}
+@media(max-width: 768px) {
+  .global-metrics { flex-wrap: wrap; }
+  .global-metric { padding: 20px 24px 20px 0; }
+}
+
+/* ── Shower Radio ── */
+.shower-radio-section {
+  margin-top: 56px;
+  padding-top: 48px;
+  border-top: 1px solid var(--border);
+}
+.shower-radio-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .2em;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+.shower-radio-title {
+  font-size: clamp(18px, 2vw, 26px);
+  font-weight: 700;
+  letter-spacing: -.02em;
+  color: var(--black);
+  margin-bottom: 14px;
+}
+.shower-radio-desc {
+  font-family: var(--kr);
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--gray2);
+  line-height: 2;
+  margin-bottom: 32px;
+  max-width: 520px;
+}
+.shower-radio-player {
+  position: relative;
+  aspect-ratio: 16/9;
+  background: var(--black);
+  overflow: hidden;
+  display: block;
+  cursor: pointer;
+  text-decoration: none;
+}
+.shower-radio-player img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .4s ease, opacity .3s ease;
+}
+.shower-radio-player:hover img {
+  transform: scale(1.03);
+  opacity: .8;
+}
+.shower-radio-play-btn {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 72px; height: 72px;
+  background: rgba(255,255,255,.15);
+  backdrop-filter: blur(10px);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .25s, transform .25s;
+}
+.shower-radio-player:hover .shower-radio-play-btn {
+  background: var(--accent);
+  transform: translate(-50%, -50%) scale(1.1);
+}
+.shower-radio-play-icon {
+  width: 0; height: 0;
+  border-style: solid;
+  border-width: 13px 0 13px 24px;
+  border-color: transparent transparent transparent #ffffff;
+  margin-left: 5px;
+}
+
+/* ── TrueFocus ── */
+.focus-container {
+  position: relative;
+  display: inline-flex;
+  gap: 0.3em;
+  justify-content: flex-start;
+  align-items: baseline;
+  flex-wrap: nowrap;
+  outline: none;
+  user-select: none;
+  vertical-align: baseline;
+  overflow: visible;
+}
+.focus-word {
+  font-size: inherit;
+  font-weight: inherit;
+  font-family: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  color: var(--accent);
+  cursor: default;
+  outline: none;
+  user-select: none;
+  white-space: nowrap;
+}
+.focus-frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  box-sizing: content-box;
+}
+.corner {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border: 2.5px solid var(--border-color, #C96F4A);
+  filter: drop-shadow(0 0 5px var(--glow-color, rgba(201,111,74,.6)));
+  border-radius: 2px;
+}
+.top-left    { top: -10px; left: -10px; border-right: none; border-bottom: none; }
+.top-right   { top: -10px; right: -10px; border-left: none; border-bottom: none; }
+.bottom-left { bottom: -10px; left: -10px; border-right: none; border-top: none; }
+.bottom-right{ bottom: -10px; right: -10px; border-left: none; border-top: none; }
+
+/* ── TextType ── */
+.text-type {
+  display: inline-block;
+  white-space: pre-wrap;
+}
+.text-type__content { display: inline; }
+.text-type__cursor {
+  margin-left: 0.05em;
+  display: inline-block;
+  opacity: 1;
+  animation: cursorBlink 1s ease-in-out infinite;
+}
+.text-type__cursor--hidden { display: none; }
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-logo">PARK JIMIN</div>
+  <ul class="nav-links">
+    <li><a href="#about">ABOUT</a></li>
+    <li><a href="#career">CAREER</a></li>
+    <li><a href="#cases">WORK</a></li>
+    <li><a href="#skills">SKILLS</a></li>
+    <li><a href="#contact">CONTACT</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-label">BRAND STRATEGIST · CMO · 12 YEARS</div>
+    <h1 class="hero-name">
+      브랜드가 사람에게<br>
+      닿는 <span id="truefocus-hero-root"></span>를<br>
+      만드는 박지민입니다.
+    </h1>
+    <p class="hero-desc">
+      세계관을 설계하고, 광고를 돌리고, 사이트를 직접 만듭니다.<br>
+      기획과 실행 사이에 아무도 없습니다.
+    </p>
+    <div class="hero-metrics">
+      <div class="metric-item">
+        <div class="metric-num">12</div>
+        <div class="metric-label">YEARS EXPERIENCE</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-num">5억</div>
+        <div class="metric-label">공동구매 1주일 달성</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-num">4</div>
+        <div class="metric-label">WEBSITES BUILT</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-num">1,000<span style="font-size:.6em">만</span></div>
+        <div class="metric-label">월 절감 (CMO 3개월)</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll">SCROLL DOWN</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="section-label">01 — ABOUT</div>
+  <div class="about-heading reveal">
+    <h2 class="section-title">12년이<br>만든 사람</h2>
+    <div class="building-wrap">
+      <div class="building" id="building-anim">
+        <div class="floor"></div>
+        <div class="floor"></div>
+        <div class="floor"></div>
+        <div class="floor"></div>
+        <div class="floor"></div>
+        <div class="floor"></div>
+        <div class="floor"></div>
+        <div class="floor"></div>
+        <div class="floor"></div>
+        <div class="floor"></div>
+        <div class="floor"></div>
+        <div class="floor"></div>
+        <div class="antenna"></div>
+      </div>
+    </div>
+  </div>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>
+        유학 상담사로 시작해 CMO까지.<br>
+        <strong>브랜드를 전략으로 설계하고, 직접 실행하는 사람</strong>입니다.
+      </p>
+      <p>
+        세계관을 잡고, 광고를 돌리고, 사이트를 만들고, 제품을 기획합니다.
+        대행사에 맡기는 것이 아니라 — 직접 합니다.
+      </p>
+      <p>
+        파이어볼에서 공동구매 5억을 달성했고,
+        테이크어샤워에서 글로벌 사이트를 Next.js로 직접 개발했습니다.
+        광고 대행사를 감사하고 인하우스로 전환해 월 1,000만원을 절감했습니다.
+      </p>
+      <p>
+        브랜드가 어떻게 경험되는지를 설계하는 것이 제 일입니다.
+      </p>
+    </div>
+    <div class="about-values reveal">
+      <div class="value-item">
+        <div class="value-num">01</div>
+        <div class="value-content">
+          <div class="value-title">세계관부터</div>
+          <div class="value-desc">브랜드의 존재 이유를 먼저 정합니다. 거기서 모든 게 시작됩니다.</div>
+        </div>
+      </div>
+      <div class="value-item">
+        <div class="value-num">02</div>
+        <div class="value-content">
+          <div class="value-title">직접 실행</div>
+          <div class="value-desc">기획만 하지 않습니다. 광고도, 사이트도, 제품도 직접 만듭니다.</div>
+        </div>
+      </div>
+      <div class="value-item">
+        <div class="value-num">03</div>
+        <div class="value-content">
+          <div class="value-title">결과로 말한다</div>
+          <div class="value-desc">12년간 어떤 환경에서도 숫자를 만들어왔습니다.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CAREER -->
+<section class="career" id="career">
+  <div class="section-label">02 — CAREER</div>
+  <h2 class="section-title reveal">궤적</h2>
+  <div class="career-list">
+
+    <div class="career-item reveal">
+      <div class="career-period">2026.03 — 현재</div>
+      <div class="career-right">
+        <div class="career-company">Take A Shower</div>
+        <div class="career-role">CMO (이사) · 브랜드 마케팅 총괄</div>
+        <div class="career-works">
+          <span class="work-tag">세계관 설계</span>
+          <span class="work-tag">Next.js 개발</span>
+          <span class="work-tag">Meta · Naver · YouTube</span>
+          <span class="work-tag">현대백화점 입점</span>
+          <span class="work-tag">광고 인하우스 전환</span>
+        </div>
+        <div class="career-highlight">
+          "샤워를 리추얼로" 브랜드 세계관 설계 · 글로벌 홈페이지 직접 개발 (한/영/일)<br>
+          광고 대행사 전채널 감사 후 인하우스 전환 · <strong>CMO 합류 3개월 만에 월 1,000만원 절감</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="career-item reveal">
+      <div class="career-period">2021.03 — 2025.02</div>
+      <div class="career-right">
+        <div class="career-company">Fireball Korea</div>
+        <div class="career-role">과장/팀장 · 브랜드 마케팅</div>
+        <div class="career-works">
+          <span class="work-tag">브랜드 세계관</span>
+          <span class="work-tag">공동구매 기획</span>
+          <span class="work-tag">커뮤니티 운영</span>
+          <span class="work-tag">제품 기획</span>
+          <span class="work-tag">사이트 구축</span>
+        </div>
+        <div class="career-highlight">
+          파이어볼 패밀리 커뮤니티 구축 · 시즌 캠페인 기획~실행<br>
+          카향수 4종 · 디퓨저 3종 제품 기획 출시 · <strong>공동구매 1주일 5억 달성</strong><br>
+          현대자동차 브랜드 협업 제안 · fireballkorea.com · fireballshop.com 직접 구축
+        </div>
+      </div>
+    </div>
+
+    <div class="career-item reveal">
+      <div class="career-period">2020.02 — 2020.08</div>
+      <div class="career-right">
+        <div class="career-company">종로유학원</div>
+        <div class="career-role">매니저 · 스카웃 입사</div>
+        <div class="career-works">
+          <span class="work-tag">유학 상담</span>
+          <span class="work-tag">스카웃</span>
+        </div>
+        <div class="career-highlight">
+          유학피플 7년 성과를 인정받아 스카웃 입사 · 코로나19 여파로 유학업계 전반 타격
+        </div>
+      </div>
+    </div>
+
+    <div class="career-item reveal">
+      <div class="career-period">2012.09 — 2020.01</div>
+      <div class="career-right">
+        <div class="career-company">유학피플 부산지사</div>
+        <div class="career-role">인턴 → 주임 → 대리 → 차장 (7년)</div>
+        <div class="career-works">
+          <span class="work-tag">유학 상담</span>
+          <span class="work-tag">SNS 마케팅</span>
+          <span class="work-tag">지사 운영</span>
+          <span class="work-tag">울산지사 오픈</span>
+        </div>
+        <div class="career-highlight">
+          7년간 <strong>개인 월 수익 2,000만원 이상</strong> 꾸준히 달성 · 울산지사 오픈 및 운영 전반 담당<br>
+          블로그·SNS 마케팅으로 신규 유입 채널 구축 · 타사 스카웃
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CASE STUDIES -->
+<section class="cases" id="cases">
+  <div class="section-label">03 — WORK</div>
+  <h2 class="section-title reveal">증거</h2>
+
+  <!-- CASE 1: 테이크어샤워 -->
+  <div class="case-item reveal">
+    <div class="case-header">
+      <div>
+        <div class="case-num">CASE 01</div>
+        <div class="case-title" id="case01-title-root"></div>
+      </div>
+      <div class="case-category">Brand Strategy<br>Web Development<br>Performance Marketing</div>
+    </div>
+    <div class="case-body">
+      <div class="case-summary">
+        <div class="case-summary-label">OVERVIEW</div>
+        <div class="case-summary-text">
+          비건 바디케어 브랜드 테이크어샤워의 CMO로 합류.
+          브랜드 세계관 "샤워를 리추얼로"를 설계하고
+          제품, 콘텐츠, B2B 전 채널에 일관 적용했습니다.<br><br>
+          광고 대행사 전 채널 성과를 직접 감사하고
+          Meta, Naver, YouTube를 인하우스로 전환했습니다.
+          글로벌 홈페이지는 Next.js로 직접 개발해
+          한/영/일 3개국어로 배포했습니다.
+        </div>
+        <a href="https://www.bytakeashower.com" target="_blank" class="case-link">
+          bytakeashower.com →
+        </a>
+      </div>
+      <div class="case-results">
+        <div class="result-item">
+          <div class="result-num">월 1,000만</div>
+          <div class="result-desc">불필요 지출 절감, CMO 합류 3개월 만에</div>
+        </div>
+        <div class="result-item">
+          <div class="result-num">3개국어</div>
+          <div class="result-desc">글로벌 홈페이지 직접 개발 (한 · 영 · 일)</div>
+        </div>
+        <div class="result-item">
+          <div class="result-num">현대백화점</div>
+          <div class="result-desc">온오프라인 채널 확보, 직접 미팅 완료</div>
+        </div>
+      </div>
+    </div>
+    <div class="site-embed-wrap">
+      <div class="site-embed">
+        <iframe src="https://www.bytakeashower.com" loading="lazy" title="bytakeashower.com"></iframe>
+        <div class="site-embed-label">bytakeashower.com</div>
+      </div>
+    </div>
+
+    <div class="shower-radio-section">
+      <div class="shower-radio-label">SHOWER RADIO</div>
+      <div class="shower-radio-title">브랜드 세계관을 소리로 만들었다</div>
+      <div class="shower-radio-desc">
+        음악 기획부터 썸네일 제작, 영상 편집, 업로드까지 직접.<br>
+        "샤워를 리추얼로" — 그 감도를 소리로 옮겼습니다.
+      </div>
+      <a class="shower-radio-player" href="https://youtu.be/qSrtV3ye4C4?list=PLAt8hrKMc_T5-sHEjLnfM4DmZRbqDLfuH" target="_blank">
+        <img src="https://img.youtube.com/vi/qSrtV3ye4C4/maxresdefault.jpg" alt="샤워라디오">
+        <div class="shower-radio-play-btn">
+          <div class="shower-radio-play-icon"></div>
+        </div>
+      </a>
+      <a href="https://www.youtube.com/@테이크어샤워" target="_blank" class="case-link" style="margin-top:24px;">
+        YouTube 채널 전체 보기 →
+      </a>
+    </div>
+  </div>
+
+  <!-- CASE 2: 파이어볼 공동구매 -->
+  <div class="case-item reveal">
+    <div class="case-header">
+      <div>
+        <div class="case-num">CASE 02</div>
+        <div class="case-title" id="case02-title-root"></div>
+      </div>
+      <div class="case-category">Community Building<br>Campaign Planning<br>Web Development</div>
+    </div>
+    <div class="case-body">
+      <div class="case-summary">
+        <div class="case-summary-label">OVERVIEW</div>
+        <div class="case-summary-text">
+          자동차 케어 브랜드 파이어볼의 브랜드 마케팅을 총괄.
+          파이어볼 패밀리 커뮤니티를 구축해 브랜드 팬층을 만들었습니다.<br><br>
+          벚꽃 에디션, 크리스마스 에디션 등 시즌 캠페인을
+          기획부터 실행까지 직접 운영했습니다.
+          공동구매 매출을 1억에서 5억까지 성장시켰고,
+          마지막 공동구매 1주일 만에 5억을 달성했습니다.
+        </div>
+        <a href="https://www.fireballkorea.com" target="_blank" class="case-link">
+          fireballkorea.com →
+        </a>
+      </div>
+      <div class="case-results">
+        <div class="result-item">
+          <div class="result-num">5억</div>
+          <div class="result-desc">공동구매 1주일 달성, 초기 대비 5배 성장</div>
+        </div>
+        <div class="result-item">
+          <div class="result-num">현대자동차</div>
+          <div class="result-desc">직접 컨택 브랜드 협업 제안, 대기업 추진</div>
+        </div>
+        <div class="result-item">
+          <div class="result-num">7종</div>
+          <div class="result-desc">카향수 4종 · 디퓨저 3종 직접 기획 출시</div>
+        </div>
+      </div>
+    </div>
+    <div class="site-embed-wrap">
+      <div class="site-embed">
+        <iframe src="https://www.fireballshop.com/shopinfo/company.html" loading="lazy" title="fireballshop.com"></iframe>
+        <div class="site-embed-label">fireballshop.com</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CASE 3: 바인더 스페셜 에디션 -->
+  <div class="case-item reveal">
+    <div class="case-header">
+      <div>
+        <div class="case-num">CASE 03</div>
+        <div class="case-title" id="case03-title-root"></div>
+      </div>
+      <div class="case-category">Product Planning<br>Brand Identity<br>Web Development</div>
+    </div>
+    <div class="case-body">
+      <div class="case-summary">
+        <div class="case-summary-label">OVERVIEW</div>
+        <div class="case-summary-text">
+          자동차 케어 브랜드 바인더의 스페셜 에디션을
+          제품 기획부터 출시까지 직접 담당했습니다.<br><br>
+          콘셉트 설정, 라인업 구성, 패키징 방향까지
+          전 과정을 기획하고 완판을 달성했습니다.
+          binderkorea.com도 직접 구축했습니다.
+        </div>
+        <a href="https://www.binderkorea.com" target="_blank" class="case-link">
+          binderkorea.com →
+        </a>
+      </div>
+      <div class="case-results">
+        <div class="result-item">
+          <div class="result-num">완판</div>
+          <div class="result-desc">스페셜 에디션 전량 판매, 기획부터 출시까지</div>
+        </div>
+        <div class="result-item">
+          <div class="result-num">직접 기획</div>
+          <div class="result-desc">콘셉트 · 라인업 · 패키징 전 과정 담당</div>
+        </div>
+      </div>
+    </div>
+    <div class="site-embed-wrap">
+      <div class="site-embed">
+        <iframe src="https://www.binderkorea.com/special-edition" loading="lazy" title="binderkorea.com/special-edition"></iframe>
+        <div class="site-embed-label">binderkorea.com/special-edition</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CASE 4: NUiE -->
+  <div class="case-item reveal">
+    <div class="case-header">
+      <div>
+        <div class="case-num">CASE 04</div>
+        <div class="case-title" id="case04-title-root"></div>
+      </div>
+      <div class="case-category">Brand Concept<br>Web Development<br>Side Project</div>
+    </div>
+
+    <div class="case-body">
+      <div class="case-summary">
+        <div class="case-summary-label">BACKGROUND</div>
+        <div class="case-summary-text">
+          섬유향수 브랜드를 기획하던 중, 세계관을 잡으면 잡을수록 멈추게 됐습니다.<br><br>
+          <em>"나는 향을 팔고 싶은 게 아니었다. 위로하는 사람이 되고 싶었던 거다."</em><br><br>
+          AI가 빨라지고, 세상은 효율을 강요하고,
+          사람들은 끊임없이 비교당하며 자신을 의심합니다.
+          그 시대 속에서 — 인간이 인간으로 잠시 숨 쉴 수 있는
+          유일한 온라인 공간을 만들었습니다.
+        </div>
+        <a href="https://bynuie.com" target="_blank" class="case-link">bynuie.com →</a>
+      </div>
+      <div class="case-results">
+        <div class="result-item">
+          <div class="result-num" style="font-size:clamp(15px,1.6vw,20px);">"잠시 머물다 가세요"</div>
+          <div class="result-desc">판매 없음. 설명 없음. 그냥 곁에 있음.</div>
+        </div>
+        <div class="result-item">
+          <div class="result-num">전시실 2</div>
+          <div class="result-desc">무너진 인간의 감정 · 사람 냄새나는 세계</div>
+        </div>
+        <div class="result-item">
+          <div class="result-num">실시간</div>
+          <div class="result-desc">방명록 · 계정 없음 · 좋아요 없음</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NUiE 세계관 상세 -->
+    <div class="nuie-exhibition-grid">
+      <div class="nuie-exhibition-cell">
+        <div class="nuie-exhibition-label">EXHIBITION 01</div>
+        <div class="nuie-exhibition-title">무너진 인간의 감정</div>
+        <div class="nuie-exhibition-desc">지쳐버린 인간의 생존 기록.<br>생존 · 억울 · 멈춤 · 고립 · 속도 · 소멸</div>
+        <div class="nuie-exhibition-sub">6개의 방. 각 방마다 감정과 방명록.</div>
+      </div>
+      <div class="nuie-exhibition-cell">
+        <div class="nuie-exhibition-label">EXHIBITION 02</div>
+        <div class="nuie-exhibition-title">사람 냄새나는 세계</div>
+        <div class="nuie-exhibition-desc">인간으로 남고 싶은 마음에 대하여.<br>온기 · 체온 · 흔적 · 아직 여기 있다는 감각</div>
+        <div class="nuie-exhibition-sub">스크롤로 흘러가는 6개의 감정.</div>
+      </div>
+    </div>
+
+    <!-- We do not fix -->
+    <div class="nuie-quote-block">
+      <div class="nuie-quote-main">"We do not fix. We stay."</div>
+      <div class="nuie-quote-stack">Firebase · Vercel · HTML/CSS/JS · 실시간 방문자 카운트</div>
+    </div>
+
+    <div class="site-embed-wrap">
+      <div class="site-embed">
+        <iframe src="https://bynuie.com" loading="lazy" title="bynuie.com" allow="fullscreen"></iframe>
+        <div class="site-embed-label">bynuie.com</div>
+      </div>
+    </div>
+
+    <div class="global-experiment">
+      <div class="global-experiment-label">GLOBAL EXPERIMENT</div>
+      <div class="global-experiment-title">같은 세계관을 영어로, 전 세계에</div>
+      <p class="global-experiment-desc">
+        NUiE의 감도를 영어 채널로 확장해 글로벌 알고리즘 실험을 진행했습니다.<br>
+        신규 채널 · 무광고 · 첫 영상만으로 데이터를 만들었습니다.
+      </p>
+      <div class="global-metrics">
+        <div class="global-metric">
+          <div class="global-metric-num">700</div>
+          <div class="global-metric-label">첫 영상 · 24시간 조회수</div>
+        </div>
+        <div class="global-metric">
+          <div class="global-metric-num">Day 1</div>
+          <div class="global-metric-label">광고 없음 · 신규 채널</div>
+        </div>
+        <div class="global-metric">
+          <div class="global-metric-num">Global</div>
+          <div class="global-metric-label">전 세계 타겟 · 영어 운영</div>
+        </div>
+      </div>
+      <div class="global-insight-block">
+        <p>"알고리즘은 성실한 진짜를 밀어준다."</p>
+      </div>
+      <a href="https://www.youtube.com/@Kept.going.anyway" target="_blank" class="case-link" style="margin-top:28px;">
+        @Kept.going.anyway →
+      </a>
+    </div>
+  </div>
+
+</section>
+
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<section class="skills" id="skills">
+  <div class="section-label">04 — SKILLS</div>
+  <h2 class="section-title reveal">무기</h2>
+  <div class="skills-grid">
+    <div class="skill-block reveal">
+      <div class="skill-icon">01</div>
+      <div class="skill-title">브랜드 전략</div>
+      <ul class="skill-list">
+        <li>세계관 설계</li>
+        <li>리브랜딩</li>
+        <li>브랜드 아이덴티티</li>
+        <li>전 채널 일관 적용</li>
+        <li>제품 기획</li>
+      </ul>
+    </div>
+    <div class="skill-block reveal">
+      <div class="skill-icon">02</div>
+      <div class="skill-title">퍼포먼스 마케팅</div>
+      <ul class="skill-list">
+        <li>Meta Ads</li>
+        <li>Naver Ads</li>
+        <li>YouTube Ads</li>
+        <li>퍼널 설계</li>
+        <li>A/B 테스트</li>
+        <li>GA4</li>
+        <li>UTM 체계</li>
+      </ul>
+    </div>
+    <div class="skill-block reveal">
+      <div class="skill-icon">03</div>
+      <div class="skill-title">개발 · 기술</div>
+      <ul class="skill-list">
+        <li>Next.js</li>
+        <li>HTML / CSS</li>
+        <li>Vercel 배포</li>
+        <li>Firebase</li>
+        <li>Cafe24</li>
+      </ul>
+    </div>
+    <div class="skill-block reveal">
+      <div class="skill-icon">04</div>
+      <div class="skill-title">콘텐츠 · 디자인</div>
+      <ul class="skill-list">
+        <li>Adobe Photoshop</li>
+        <li>Adobe Illustrator</li>
+        <li>시즌 캠페인</li>
+        <li>커뮤니티 운영</li>
+        <li>SNS 기획</li>
+      </ul>
+    </div>
+    <div class="skill-block reveal">
+      <div class="skill-icon">05</div>
+      <div class="skill-title">대행사 · B2B</div>
+      <ul class="skill-list">
+        <li>대행사 성과 감사</li>
+        <li>인하우스 전환</li>
+        <li>현대백화점 입점</li>
+        <li>현대자동차 협업</li>
+        <li>파트너 협상</li>
+      </ul>
+    </div>
+    <div class="skill-block reveal">
+      <div class="skill-icon">06</div>
+      <div class="skill-title">데이터 · 분석</div>
+      <ul class="skill-list">
+        <li>GA4</li>
+        <li>채널별 성과 분석</li>
+        <li>퍼포먼스 대시보드</li>
+        <li>인사이트 도출</li>
+        <li>회계 체계 수립</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="section-label">05 — CONTACT</div>
+  <div class="contact-title reveal">Let's<span id="rotating-contact-root"></span></div>
+  <div class="contact-sub reveal">브랜드를 함께 만들고 싶다면</div>
+  <div class="contact-links reveal">
+    <a href="mailto:dorothy0855@gmail.com" class="contact-link">dorothy0855@gmail.com</a>
+    <a href="tel:01099208258" class="contact-link">010-9920-8258</a>
+    <a href="https://bynuie.com" target="_blank" class="contact-link">bynuie.com</a>
+  </div>
+</section>
+
+<!-- PORTFOLIO SEARCH -->
+<section class="portfolio-cta">
+  <div class="portfolio-cta-label">PORTFOLIO</div>
+  <div class="portfolio-search-wrap">
+    <input
+      type="text"
+      id="portfolio-search"
+      class="portfolio-search"
+      placeholder="회사명을 입력하세요"
+      autocomplete="off"
+      spellcheck="false"
+    >
+    <div id="portfolio-results" class="portfolio-results"></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-name">PARK JIMIN · Brand Strategist</div>
+  <div class="footer-copy">© 2026 박지민. All rights reserved.</div>
+</footer>
+
+<script>
+// NAV 스크롤
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// Building animation
+const building = document.getElementById('building-anim');
+if (building) {
+  const bObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('animate');
+        bObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  bObs.observe(building);
+}
+
+// Reveal 애니메이션
+const reveals = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('show');
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+reveals.forEach(el => io.observe(el));
+</script>
+
+<script type="text/babel">
+const { useState } = React;
+
+/* ── TextType (GSAP 없이 CSS animation으로 구현) ── */
+function TextType({
+  text,
+  as: Component = 'div',
+  typingSpeed = 50,
+  initialDelay = 0,
+  pauseDuration = 2000,
+  deletingSpeed = 30,
+  loop = true,
+  className = '',
+  showCursor = true,
+  hideCursorWhileTyping = false,
+  cursorCharacter = '|',
+  cursorClassName = '',
+  cursorBlinkDuration = 0.5,
+  textColors = [],
+  variableSpeed,
+  onSentenceComplete,
+  startOnVisible = false,
+  reverseMode = false,
+  ...props
+}) {
+  const [displayedText, setDisplayedText] = React.useState('');
+  const [currentCharIndex, setCurrentCharIndex] = React.useState(0);
+  const [isDeleting, setIsDeleting] = React.useState(false);
+  const [currentTextIndex, setCurrentTextIndex] = React.useState(0);
+  const [isVisible, setIsVisible] = React.useState(!startOnVisible);
+  const cursorRef = React.useRef(null);
+  const containerRef = React.useRef(null);
+
+  const textArray = React.useMemo(() => (Array.isArray(text) ? text : [text]), [text]);
+
+  const getRandomSpeed = React.useCallback(() => {
+    if (!variableSpeed) return typingSpeed;
+    const { min, max } = variableSpeed;
+    return Math.random() * (max - min) + min;
+  }, [variableSpeed, typingSpeed]);
+
+  const getCurrentTextColor = () => {
+    if (textColors.length === 0) return 'inherit';
+    return textColors[currentTextIndex % textColors.length];
+  };
+
+  React.useEffect(() => {
+    if (!startOnVisible || !containerRef.current) return;
+    const observer = new IntersectionObserver(
+      entries => { entries.forEach(e => { if (e.isIntersecting) setIsVisible(true); }); },
+      { threshold: 0.1 }
+    );
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, [startOnVisible]);
+
+  React.useEffect(() => {
+    if (showCursor && cursorRef.current) {
+      cursorRef.current.style.animationDuration = `${cursorBlinkDuration * 2}s`;
+    }
+  }, [showCursor, cursorBlinkDuration]);
+
+  React.useEffect(() => {
+    if (!isVisible) return;
+    let timeout;
+    const currentText = textArray[currentTextIndex];
+    const processedText = reverseMode ? currentText.split('').reverse().join('') : currentText;
+
+    const executeTypingAnimation = () => {
+      if (isDeleting) {
+        if (displayedText === '') {
+          setIsDeleting(false);
+          if (currentTextIndex === textArray.length - 1 && !loop) return;
+          if (onSentenceComplete) onSentenceComplete(textArray[currentTextIndex], currentTextIndex);
+          setCurrentTextIndex(prev => (prev + 1) % textArray.length);
+          setCurrentCharIndex(0);
+          timeout = setTimeout(() => {}, pauseDuration);
+        } else {
+          timeout = setTimeout(() => {
+            setDisplayedText(prev => prev.slice(0, -1));
+          }, deletingSpeed);
+        }
+      } else {
+        if (currentCharIndex < processedText.length) {
+          timeout = setTimeout(() => {
+            setDisplayedText(prev => prev + processedText[currentCharIndex]);
+            setCurrentCharIndex(prev => prev + 1);
+          }, variableSpeed ? getRandomSpeed() : typingSpeed);
+        } else if (textArray.length >= 1) {
+          if (!loop && currentTextIndex === textArray.length - 1) return;
+          timeout = setTimeout(() => setIsDeleting(true), pauseDuration);
+        }
+      }
+    };
+
+    if (currentCharIndex === 0 && !isDeleting && displayedText === '') {
+      timeout = setTimeout(executeTypingAnimation, initialDelay);
+    } else {
+      executeTypingAnimation();
+    }
+
+    return () => clearTimeout(timeout);
+  }, [
+    currentCharIndex, displayedText, isDeleting, typingSpeed, deletingSpeed,
+    pauseDuration, textArray, currentTextIndex, loop, initialDelay,
+    isVisible, reverseMode, variableSpeed, onSentenceComplete
+  ]);
+
+  const shouldHideCursor = hideCursorWhileTyping &&
+    (currentCharIndex < textArray[currentTextIndex].length || isDeleting);
+
+  return (
+    <Component ref={containerRef} className={`text-type ${className}`} {...props}>
+      <span className="text-type__content" style={{ color: getCurrentTextColor() || 'inherit' }}>
+        {displayedText}
+      </span>
+      {showCursor && (
+        <span
+          ref={cursorRef}
+          className={`text-type__cursor ${cursorClassName}${shouldHideCursor ? ' text-type__cursor--hidden' : ''}`}
+        >
+          {cursorCharacter}
+        </span>
+      )}
+    </Component>
+  );
+}
+
+/* ── TextType mount: Case 타이틀 — 뷰포트 진입 시 lazy mount ── */
+const titleObs = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    const data = entry.target._caseTitleData;
+    if (data) {
+      ReactDOM.createRoot(data.el).render(
+        <TextType
+          text={data.text}
+          typingSpeed={110}
+          variableSpeed={{ min: 80, max: 160 }}
+          loop={false}
+          showCursor={true}
+          cursorCharacter="|"
+          cursorBlinkDuration={0.5}
+        />
+      );
+    }
+    titleObs.unobserve(entry.target);
+  });
+}, { threshold: 0.05 });
+
+[
+  { id: 'case01-title-root', text: 'Take A Shower\n— CMO로서 브랜드를 세웠다' },
+  { id: 'case02-title-root', text: 'Fireball Korea\n— 팬이 사는 브랜드를 만들었다' },
+  { id: 'case03-title-root', text: 'Binder Korea\n— 제품을 기획하고 완판했다' },
+  { id: 'case04-title-root', text: 'NUiE (누이)\n— 인간은 인간이어야 하는 거야' },
+].forEach(({ id, text }) => {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const caseItem = el.closest('.case-item');
+  if (caseItem) {
+    caseItem._caseTitleData = { el, text };
+    titleObs.observe(caseItem);
+  }
+});
+
+/* ── TrueFocus (framer-motion 없이 CSS transition으로 구현) ── */
+function TrueFocus({
+  sentence = '순간의 온도',
+  separator = ' ',
+  manualMode = false,
+  blurAmount = 5,
+  borderColor = '#C96F4A',
+  glowColor = 'rgba(201, 111, 74, 0.55)',
+  animationDuration = 0.5,
+  pauseBetweenAnimations = 1.8,
+}) {
+  const words = sentence.split(separator);
+  const [currentIndex, setCurrentIndex] = React.useState(0);
+  const [lastActiveIndex, setLastActiveIndex] = React.useState(null);
+  const containerRef = React.useRef(null);
+  const wordRefs = React.useRef([]);
+  const [focusRect, setFocusRect] = React.useState({ x: 0, y: 0, width: 0, height: 0 });
+
+  React.useEffect(() => {
+    if (!manualMode) {
+      const interval = setInterval(() => {
+        setCurrentIndex(prev => (prev + 1) % words.length);
+      }, (animationDuration + pauseBetweenAnimations) * 1000);
+      return () => clearInterval(interval);
+    }
+  }, [manualMode, animationDuration, pauseBetweenAnimations, words.length]);
+
+  React.useEffect(() => {
+    if (currentIndex === null || currentIndex === -1) return;
+    if (!wordRefs.current[currentIndex] || !containerRef.current) return;
+    const parentRect = containerRef.current.getBoundingClientRect();
+    const activeRect = wordRefs.current[currentIndex].getBoundingClientRect();
+    setFocusRect({
+      x: activeRect.left - parentRect.left,
+      y: activeRect.top - parentRect.top,
+      width: activeRect.width,
+      height: activeRect.height,
+    });
+  }, [currentIndex, words.length]);
+
+  const handleMouseEnter = index => {
+    if (manualMode) { setLastActiveIndex(index); setCurrentIndex(index); }
+  };
+  const handleMouseLeave = () => {
+    if (manualMode) setCurrentIndex(lastActiveIndex);
+  };
+
+  return (
+    <span className="focus-container" ref={containerRef}>
+      {words.map((word, index) => {
+        const isActive = index === currentIndex;
+        return (
+          <span
+            key={index}
+            ref={el => (wordRefs.current[index] = el)}
+            className={`focus-word${isActive ? ' active' : ''}`}
+            style={{
+              filter: isActive ? 'blur(0px)' : `blur(${blurAmount}px)`,
+              transition: `filter ${animationDuration}s ease`,
+            }}
+            onMouseEnter={() => handleMouseEnter(index)}
+            onMouseLeave={handleMouseLeave}
+          >
+            {word}
+          </span>
+        );
+      })}
+      <span
+        className="focus-frame"
+        style={{
+          transform: `translate(${focusRect.x}px, ${focusRect.y}px)`,
+          width: focusRect.width + 'px',
+          height: focusRect.height + 'px',
+          opacity: currentIndex >= 0 ? 1 : 0,
+          transition: `transform ${animationDuration}s ease, width ${animationDuration}s ease, height ${animationDuration}s ease`,
+          '--border-color': borderColor,
+          '--glow-color': glowColor,
+        }}
+      >
+        <span className="corner top-left"></span>
+        <span className="corner top-right"></span>
+        <span className="corner bottom-left"></span>
+        <span className="corner bottom-right"></span>
+      </span>
+    </span>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('truefocus-hero-root')).render(
+  <TrueFocus
+    sentence="순간의 온도"
+    borderColor="#C96F4A"
+    glowColor="rgba(201, 111, 74, 0.5)"
+    animationDuration={0.5}
+    pauseBetweenAnimations={1.8}
+    blurAmount={4}
+  />
+);
+
+/* ── RotatingText (pure CSS animation) ── */
+const RT_TEXTS = ['talk.', 'build.', 'meet.'];
+
+function RotatingText() {
+  const [index, setIndex] = React.useState(0);
+  const [phase, setPhase] = React.useState('in');
+
+  React.useEffect(() => {
+    const t = setTimeout(() => setPhase('out'), 2200);
+    return () => clearTimeout(t);
+  }, [index]);
+
+  const handleAnimEnd = () => {
+    if (phase === 'out') {
+      setIndex(i => (i + 1) % RT_TEXTS.length);
+      setPhase('in');
+    }
+  };
+
+  return (
+    <span className="rt-accent-box">
+      <span
+        key={index}
+        className={`rt-text ${phase === 'in' ? 'rt-in' : 'rt-out'}`}
+        onAnimationEnd={handleAnimEnd}
+      >
+        {RT_TEXTS[index]}
+      </span>
+    </span>
+  );
+}
+
+/* ── Mount RotatingText in Contact ── */
+ReactDOM.createRoot(document.getElementById('rotating-contact-root')).render(<RotatingText />);
+</script>
+
+<script>
+/* ── Portfolio Search ── */
+const PORTFOLIO_LIST = [
+  { keywords: ['새미그룹', '새미', 'saemi'], label: '새미그룹', file: '새미그룹_포트폴리오.html' },
+  /* 새 회사 추가 시: { keywords: ['회사명', '약칭'], label: '표시명', file: '파일명.html' } */
+];
+
+const searchEl  = document.getElementById('portfolio-search');
+const resultsEl = document.getElementById('portfolio-results');
+
+searchEl.addEventListener('input', () => {
+  const q = searchEl.value.trim().toLowerCase();
+  resultsEl.innerHTML = '';
+  if (!q) return;
+
+  const matches = PORTFOLIO_LIST.filter(p =>
+    p.keywords.some(k => k.toLowerCase().includes(q))
+  );
+
+  if (matches.length === 0) {
+    const msg = document.createElement('div');
+    msg.className = 'portfolio-no-result';
+    msg.textContent = '검색 결과가 없습니다.';
+    resultsEl.appendChild(msg);
+    return;
+  }
+
+  matches.forEach(p => {
+    const a = document.createElement('a');
+    a.href = p.file;
+    a.className = 'portfolio-result-item';
+    a.innerHTML = `<span>${p.label}</span><span class="portfolio-result-arrow">→</span>`;
+    resultsEl.appendChild(a);
+  });
+});
+</script>
+</body>
+</html>
