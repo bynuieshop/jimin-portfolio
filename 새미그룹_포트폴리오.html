@@ -429,12 +429,22 @@
       #s2 .inner { grid-template-columns: 1fr; gap: 48px; }
       #s3 .inner { grid-template-columns: 1fr; gap: 48px; }
       .tree-col { justify-content: flex-start; }
-      .frag-stage { height: 280px; }
+      .frag-stage { height: 280px; overflow: hidden; }
       .back-btn { top: 20px; left: 24px; }
+      .frag { font-size: 12px; padding: 7px 14px; }
     }
     @media(max-width: 480px) {
-      section { padding: 64px 20px; }
+      section { padding: 88px 20px; }
       .cta-box { padding: 36px 24px; }
+      .frag-stage { height: 220px; }
+      .frag { font-size: 11px; padding: 6px 10px; }
+      /* right-anchored frags: 화면 밖 방지 */
+      .frag:nth-child(2) { right: auto; left: 50%; }
+      .frag:nth-child(4) { right: auto; left: 40%; }
+      .op-title { font-size: clamp(24px, 7vw, 36px); }
+      .seed-h { font-size: clamp(20px, 5.5vw, 30px); }
+      .phil-lines { margin-top: 40px; }
+      .cta-main { font-size: clamp(22px, 6vw, 36px); }
     }
   </style>
 </head>

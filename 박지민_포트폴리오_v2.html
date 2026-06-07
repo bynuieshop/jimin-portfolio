@@ -27,7 +27,7 @@
   --kr: 'Noto Sans KR', sans-serif;
 }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
 
 body {
   background: var(--bg);
@@ -72,16 +72,71 @@ nav.scrolled { border-bottom-color: var(--black); }
 }
 .nav-links a:hover { color: var(--black); }
 
+/* ── HAMBURGER ── */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  z-index: 101;
+}
+.nav-hamburger span {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: var(--black);
+  transition: transform .25s ease, opacity .2s ease;
+}
+.nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+.mobile-menu {
+  position: fixed;
+  top: 64px; left: 0; right: 0;
+  background: rgba(255,255,255,.98);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  z-index: 99;
+  padding: 0 24px 24px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: opacity .2s ease, transform .2s ease, visibility .2s;
+}
+.mobile-menu.open { opacity: 1; visibility: visible; transform: translateY(0); }
+.mobile-menu ul { list-style: none; display: flex; flex-direction: column; }
+.mobile-menu li a {
+  display: block;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  color: var(--gray2);
+  transition: color .15s;
+}
+.mobile-menu li a:hover { color: var(--black); }
+.mobile-menu li:last-child a { border-bottom: none; }
+
 @media(max-width: 768px) {
   nav { padding: 0 24px; }
   .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
+}
+@media(min-width: 769px) {
+  .mobile-menu { display: none !important; }
 }
 
 /* ── HERO ── */
 .hero {
   min-height: 100vh;
   display: flex; flex-direction: column; justify-content: flex-end;
-  padding: 0 60px 100px;
+  padding: 100px 60px 100px;
   position: relative; overflow: hidden;
   background: var(--bg);
   border-bottom: 1px solid var(--black);
@@ -175,7 +230,7 @@ nav.scrolled { border-bottom-color: var(--black); }
 }
 
 @media(max-width: 768px) {
-  .hero { padding: 0 24px 72px; }
+  .hero { padding: 80px 24px 72px; }
   .hero-metrics { flex-wrap: wrap; gap: 0; }
   .metric-item { padding: 20px 24px 0 0; margin-right: 24px; }
   .hero-scroll { display: none; }
@@ -709,6 +764,7 @@ section { padding: 120px 60px; }
 @media(max-width: 768px) {
   .contact { padding: 100px 24px; }
   .footer { padding: 20px 24px; flex-direction: column; gap: 10px; text-align: center; }
+  .portfolio-cta { padding: 64px 24px; }
 }
 
 /* ── NUiE 전시 그리드 ── */
@@ -769,9 +825,9 @@ section { padding: 120px 60px; }
 
 /* ── RESPONSIVE: 480px 모바일 전면 ── */
 @media(max-width: 480px) {
-  section { padding: 60px 20px; }
+  section { padding: 88px 20px; }
   .section-title { margin-bottom: 40px; }
-  .hero { padding: 0 20px 56px; }
+  .hero { padding: 72px 20px 56px; }
   .hero-scroll { display: none; }
   .metric-item { padding: 16px 14px 0 0; margin-right: 14px; }
   .metric-num { font-size: clamp(20px, 5.5vw, 32px); }
@@ -797,6 +853,11 @@ section { padding: 120px 60px; }
   .contact-links { flex-direction: column; align-items: center; gap: 20px; }
 
   .footer { padding: 18px 20px; }
+
+  .site-embed iframe { height: 280px; }
+  .site-embed-wrap.cols-2 .site-embed iframe { height: 260px; }
+
+  .portfolio-cta { padding: 56px 20px; }
 
 }
 
@@ -1121,7 +1182,21 @@ section { padding: 120px 60px; }
     <li><a href="#skills">SKILLS</a></li>
     <li><a href="#contact">CONTACT</a></li>
   </ul>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="메뉴">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu">
+  <ul>
+    <li><a href="#about">ABOUT</a></li>
+    <li><a href="#career">CAREER</a></li>
+    <li><a href="#cases">WORK</a></li>
+    <li><a href="#skills">SKILLS</a></li>
+    <li><a href="#contact">CONTACT</a></li>
+  </ul>
+</div>
 
 <!-- HERO -->
 <section class="hero" id="hero">
@@ -1694,6 +1769,20 @@ section { padding: 120px 60px; }
 const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// 햄버거 메뉴
+const hamburger = document.getElementById('nav-hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+});
+mobileMenu.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+  });
 });
 
 // Building animation
