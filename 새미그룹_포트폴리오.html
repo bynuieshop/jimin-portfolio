@@ -423,6 +423,65 @@
     }
 
 
+    /* ── OP ACTION ── */
+    .op-action {
+      font-family: 'Noto Serif KR', serif;
+      font-size: clamp(12px, 1.6vw, 14px);
+      color: var(--sub);
+      letter-spacing: .06em;
+      margin-top: 20px;
+      line-height: 1.9;
+      opacity: 0;
+      animation: fadeUp .7s ease forwards 3s;
+    }
+
+    /* ── AXIS CONNECT ── */
+    .axis-connect {
+      margin-top: 24px;
+      font-size: 13px;
+      color: var(--light);
+      letter-spacing: .05em;
+      line-height: 1.8;
+      padding-left: 22px;
+      border-left: 1px solid var(--green);
+    }
+
+    /* ── EFFECT BOX ── */
+    .effect-box {
+      margin-top: 44px;
+      padding: 24px 28px;
+      border: 1px solid rgba(196,163,90,.18);
+      background: rgba(196,163,90,.03);
+    }
+    .effect-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 10px;
+      letter-spacing: .28em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .effect-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .effect-list li {
+      font-size: 13px;
+      color: var(--sub);
+      line-height: 1.9;
+      padding-left: 20px;
+      position: relative;
+    }
+    .effect-list li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+      font-family: 'Cormorant Garamond', serif;
+    }
+
     /* ── RESPONSIVE ── */
     @media(max-width: 768px) {
       section { padding: 80px 24px; }
@@ -478,6 +537,7 @@
   <div id="opening-copy">
     <div class="op-title">살리는 샘, 새미</div>
     <div class="op-sub">생명의 샘, 새로운 미래 — 이 이름 안에 하나의 세계가 있다.</div>
+    <div class="op-action">저는 이 철학이 사업과 브랜드 언어로 연결되는 구조를 제안합니다.</div>
   </div>
 
   <div class="scroll-cue">
@@ -586,7 +646,9 @@
         </li>
       </ul>
 
-      <div class="phil-box reveal d4">
+      <p class="axis-connect reveal d4">이것이 새미그룹 모든 계열사의 공통 언어가 됩니다.</p>
+
+      <div class="phil-box reveal d5">
         <div class="phil-cn">경천애인</div>
         <div class="phil-ko">敬天愛人 — 사람과 자연이 함께 살아가는 지속가능한 농업의 철학</div>
       </div>
@@ -630,6 +692,15 @@
         <span class="sys-n">06</span>
         <span class="sys-t">B2C 브랜드 언어 — 소비자를 위한 언어</span>
       </div>
+    </div>
+
+    <div class="effect-box reveal d3">
+      <div class="effect-label">예상 효과</div>
+      <ul class="effect-list">
+        <li>내부 정렬 비용 감소 — 구성원이 스스로 브랜드를 설명할 수 있게</li>
+        <li>계열사 인지도 연결 — 파편을 하나의 이름으로 묶는 구조</li>
+        <li>채용 브랜딩 강화 — 새미그룹이 선택받는 회사가 되는 언어</li>
+      </ul>
     </div>
 
     <div class="trunk-q reveal d4">
@@ -752,7 +823,8 @@
     <div class="cta-box reveal d5">
       <div class="cta-main">박지민 × 새미그룹</div>
       <div class="cta-sub">
-        살리는 샘을 세상에 꺼내는 일을 함께 시작합니다.
+        브랜드는 새로 만드는 것이 아니라,<br>
+        이미 있는 가치를 더 선명하게 발견하는 일이라고 믿습니다.
       </div>
     </div>
 
